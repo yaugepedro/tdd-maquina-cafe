@@ -155,4 +155,32 @@ public class TestSistemaCafe {
         assertEquals(40, cafetera.getCantidadCafe());
         assertEquals(16, azucarero.getCantidadAzucar());
     }
+
+    @Test
+    public void rechazarVasoInexistente() {
+        assertEquals("Pedido invalido",
+            maquina.getVasoDeCafe(null, 1, 2));
+    }
+
+    @Test
+    public void rechazarCantidadDeVasosInvalida() {
+        assertEquals("Pedido invalido",
+            maquina.getVasoDeCafe(pequeno, 0, 2));
+        assertEquals("Pedido invalido",
+            maquina.getVasoDeCafe(pequeno, -1, 2));
+    }
+
+    @Test
+    public void rechazarAzucarNegativa() {
+        assertEquals("Pedido invalido",
+            maquina.getVasoDeCafe(pequeno, 1, -1));
+    }
+
+    @Test
+    public void pedidoInvalidoNoConsumeRecursos() {
+        maquina.getVasoDeCafe(pequeno, 1, -1);
+        assertEquals(5, pequeno.getCantidadVasos());
+        assertEquals(50, cafetera.getCantidadCafe());
+        assertEquals(20, azucarero.getCantidadAzucar());
+    }
 }
